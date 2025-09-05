@@ -146,9 +146,6 @@
             </div>
         </div>
     </div>
-    <a href="/trancript">Transcript</a>
-    <a href="/registration">Registration</a>
-    <a href="/schools">Schools</a>
 </body>
 </html>
 

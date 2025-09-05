@@ -8,9 +8,19 @@ use Illuminate\Http\Request;
 class FormSubmissionController extends Controller
 {
 
+    // Display all the data from the database
+
+    public function index()
+    {
+        $formSubmissions = FormSubmission::all();
+        return view('formSubmissions.index', compact('formSubmissions'));
+    }
+
+
+    // Creates the data entered in the form to the database
+
     public function store(Request $request)
     {
-
         $formSubmission = new FormSubmission();
         $formSubmission->programme_name = $request->input('programme_name');
         $formSubmission->transcript_number = $request->input('transcript_number');
@@ -26,5 +36,22 @@ class FormSubmissionController extends Controller
     
         return redirect('/')->with('success', 'Form submitted successfully!');
     }
+
+    public function create()
+    {
+        return view('formSubmissions.create');
+    }
+
+    public function destroy($id)
+{
+    // Find the student by ID
+    $formSubmissions = FormSubmission::findOrFail($id);
+
+    // Delete it
+    $formSubmissions->delete();
+
+    // Redirect back with a success message
+    return redirect('/')->route('formSubmissions.index')->with('success', 'Student deleted successfully.');
+}
 
 }
