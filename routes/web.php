@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FormSubmissionController;
 
 Route::get('/', function () {
     return view('index');
@@ -17,3 +18,6 @@ Route::get('/schools', function () {
 Route::get('/child', function () {
     return view('child');
 });
+
+// Form Submission Route
+Route::post('submit-form', [FormSubmissionController::class, 'store'])->name('form.submit');

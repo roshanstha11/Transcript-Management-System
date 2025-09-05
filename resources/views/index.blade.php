@@ -50,14 +50,13 @@
             <div class="col-md-8">
                 <div class="form-container">
                     <h2 class="form-title">Transcript Entry Form</h2>
-                    {{-- <form method="POST" action="{{ route('transcripts.store') }}"> --}}
-                    <form method="POST" action="">
+                    <form name="index" id = "index" method="POST" action="{{ url('submit-form') }}">
                         @csrf
                         <div class="row">
                             <!-- Program -->
                             <div class="col-md-6 mb-3">
                                 <label for="program" class="form-label">Program</label>
-                                <select class="form-select" id="program" name="program" required>
+                                <select class="form-select" id="program" name="programme_name" required>
                                     <option value="">Select Program</option>
                                     <option value="BSc">BSc</option>
                                     <option value="BA">BA</option>
@@ -68,20 +67,20 @@
                             <!-- Transcript No -->
                             <div class="col-md-6 mb-3">
                                 <label for="transcript_no" class="form-label">Transcript No</label>
-                                <input type="number" class="form-control" id="transcript_no" name="transcript_no" required>
+                                <input type="number" class="form-control" id="transcript_number" name="transcript_number" required>
                             </div>
                         </div>
                         <div class="row">
                             <!-- Registration No -->
                             <div class="col-md-6 mb-3">
                                 <label for="registration_no" class="form-label">Registration No</label>
-                                <input type="text" class="form-control" id="registration_no" name="registration_no" required>
+                                <input type="text" class="form-control" id="registration_number" name="registration_number" required>
                             </div>
 
                             <!-- School/College -->
                             <div class="col-md-6 mb-3">
                                 <label for="school" class="form-label">School/College</label>
-                                <select class="form-select" id="school" name="school" required>
+                                <select class="form-select" id="school" name="school_name" required>
                                     <option value="">Select School/College</option>
                                     <option value="Tribhuvan University">Tribhuvan University</option>
                                     <option value="Kathmandu University">Kathmandu University</option>
@@ -131,7 +130,7 @@
                                     <input class="form-check-input" type="radio" name="result_type" id="percentage" value="Percentage">
                                     <label class="form-check-label" for="percentage">Percentage</label>
                                 </div>
-                                <input type="number" class="form-control mt-2" name="result_value" placeholder="Enter CGPA or Percentage" required>
+                                <input type="number" class="form-control mt-2" step="0.01" name="result" placeholder="Enter CGPA or Percentage" required>
                             </div>
                         </div>
                         <div class="row">
@@ -141,7 +140,7 @@
                                 <input type="text" class="form-control" id="remarks" name="remarks">
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit Transcript</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
             </div>
