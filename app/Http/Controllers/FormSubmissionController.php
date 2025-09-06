@@ -42,16 +42,44 @@ class FormSubmissionController extends Controller
         return view('formSubmissions.create');
     }
 
-    public function destroy($id)
-{
-    // Find the student by ID
-    $formSubmissions = FormSubmission::findOrFail($id);
+    public function editForm(FormSubmission $form)
+    {
+        return view('formSubmissions.edit',['form' => $form]);
 
-    // Delete it
-    $formSubmissions->delete();
+    }
 
-    // Redirect back with a success message
-    return redirect('/')->route('formSubmissions.index')->with('success', 'Student deleted successfully.');
-}
+    public function updateForm( FormSubmission $form, Request $request) 
+    {
+        // Use the existing model instance '$form' that Laravel provides.
+        // Do NOT create a new one with 'new FormSubmission()'.
+
+        $form->programme_name = $request->input('programme_name');
+        $form->transcript_number = $request->input('transcript_number');
+        $form->registration_number = $request->input('registration_number');
+        $form->school_name = $request->input('school_name');
+        $form->student_name = $request->input('student_name');
+        $form->nationality = $request->input('nationality');
+        $form->gender = $request->input('gender');
+        $form->result_type = $request->input('result_type');
+        $form->result = $request->input('result');
+        $form->remarks = $request->input('remarks');
+        
+        // Save the changes to the existing model.
+        $form->save();
+        
+        return redirect('/')->with('success', 'Form submitted successfully!');
+    }
+
+    public function destroy( FormSubmission $form)
+    {
+        // Find the student by ID
+        // $formSubmissions = FormSubmission::findOrFail($id);
+
+        // Delete it
+        $form->delete();
+
+        // Redirect back with a success message
+        return redirect('/')->with('success', 'Student deleted successfully.');
+    }
 
 }

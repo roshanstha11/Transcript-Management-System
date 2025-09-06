@@ -13,11 +13,12 @@ use App\Http\Controllers\FormSubmissionController;
 
 
 // // Form Submission Route
-Route::post('submit-form', [FormSubmissionController::class, 'store'])->name('form.submit');
+Route::post('submit-form', [FormSubmissionController::class, 'store']);
 Route::get('/', [FormSubmissionController::class, 'index']);
 Route::get('/create-form', [FormSubmissionController::class, 'create']);
 
 
-Route::get('/formSubmissions/{id}/edit', [FormSubmissionController::class, 'edit']);
+Route::get('/edit-form/{form}', [FormSubmissionController::class, 'editForm']);
+Route::put('/edit-form/{form}', [FormSubmissionController::class, 'updateForm']);
 // Route::put('/students/{id}', [FormSubmissionController::class, 'update']);
-Route::delete('/formSubmissions/{id}', [FormSubmissionController::class, 'destroy']);
+Route::delete('/delete-form/{form}', [FormSubmissionController::class, 'destroy']);

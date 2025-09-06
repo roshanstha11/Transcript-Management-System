@@ -65,9 +65,9 @@
         <thead>
             <tr>
                 <th>S No</th>
-                <th>Group</th>
-                <th>Transcript Number</th>
-                <th>Regd. Number</th>
+                <th>Programme</th>
+                <th>Transcript No</th>
+                <th>Regd. No</th>
                 <th>Student Name</th>
                 <th>CGPA</th>
                 <th></th>
@@ -76,7 +76,7 @@
         <tbody>
             @foreach($formSubmissions as $data)
             <tr>
-                <td>{{ $data->id }}</td>
+                <td>{{ $loop->iteration }}</td>
                 <td>{{ $data->programme_name }}</td>
                 <td>{{ $data->transcript_number }}</td>
                 <td>{{ $data->registration_number }}</td>
@@ -84,14 +84,13 @@
                 <td>{{ $data->result }}</td>
                 <td>
                     <!-- Edit Button -->
-                    <a href="{{ route('formSubmissions.edit', $formSubmissions->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="/edit-form/{{$data->id}}" class="btn btn-warning btn-sm">Edit</a>
                     
                     <!-- Delete Button -->
-                    <form action="{{ route('formSubmissions.destroy', $formSubmissions->id) }}" method="POST" style="display:inline;">
+                    <form action="/delete-form/{{$data->id}}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm"
-                                onclick="return confirm('Are you sure you want to delete this student?');">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this student?');">
                             Delete
                         </button>
                     </form>
@@ -102,17 +101,3 @@
     </table>
 </body>
 </html>
-<td>
-<!-- Edit Button
-<a href="{{ route('students.edit', $student->id) }}" class="btn btn-warning btn-sm">Edit</a>
-
-Delete Button
-<form action="{{ route('students.destroy', $student->id) }}" method="POST" style="display:inline;">
-    @csrf
-    @method('DELETE')
-    <button type="submit" class="btn btn-danger btn-sm"
-            onclick="return confirm('Are you sure you want to delete this student?');">
-        Delete
-    </button>
-</form>
-</td> -->
