@@ -1,50 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Transcript Entry Form</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f0f8ff;
-        }
-        .form-container {
-            background-color: #ffffff;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            margin-top: 50px;
-        }
-        .form-title {
-            color: #0d6efd;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .btn-primary {
-            background-color: #0d6efd;
-            border: none;
-        }
-    </style>
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">
-                <img src="{{ asset('images/kulogo.png') }}" alt="KU Logo" height="80" class="ps-5">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link text-warning" href="">Logout</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+@extends('layouts.app')
+@section('title', 'Edit Record')
+@section('content')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -147,5 +103,4 @@
             </div>
         </div>
     </div>
-</body>
-</html>
+@endsection 

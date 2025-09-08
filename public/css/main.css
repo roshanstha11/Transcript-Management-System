@@ -1,0 +1,59 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f0f8ff;
+}
+main {
+    flex: 1; /* This is the magic part: it makes the main content grow to fill all available space */
+}
+.transcript-table {
+    width: 60%;
+    margin: 40px auto;
+    border-collapse: collapse;
+    background: #fff;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    border-radius: 12px;
+    overflow: hidden;
+}
+.transcript-table th, .transcript-table td {
+    padding: 16px 20px;
+    text-align: left;
+}
+.transcript-table th {
+    background: #3f51b5;
+    color: #fff;
+    font-size: 1.1em;
+    letter-spacing: 1px;
+}
+.transcript-table tr:nth-child(even) {
+    background: #f0f2fa;
+}
+.transcript-table tr:hover {
+    background: #e3e7fa;
+    transition: background 0.2s;
+}
+.table-header-container {
+    width: 60%;
+    margin: 20px auto;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.form-container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-top: 50px;
+}
+.form-title {
+    color: #0d6efd;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.btn-primary {
+    background-color: #0d6efd;
+    border: none;
+}
