@@ -5,7 +5,8 @@ body {
     background-color: #f0f8ff;
 }
 main {
-    flex: 1; /* This is the magic part: it makes the main content grow to fill all available space */
+    min-width: 100%;
+    flex: 1; 
 }
 .transcript-table {
     width: 60%;
@@ -56,4 +57,25 @@ main {
 .btn-primary {
     background-color: #0d6efd;
     border: none;
+}
+/* The CSS for the Toast Notification  */
+.toast-notification {
+    position: fixed;   /* Stay in one place even when scrolling */
+    top: 5%;         /* 20px from the top of the screen */
+    left: 50%;        /* 20px from the right of the screen */
+    transform: translate(-50%, -50%);
+    z-index: 1050;      /* Appear on top of other content */
+    
+    /* Visual Styling */
+    background-color: #28a745; /* Success green */
+    color: white;
+    padding: 16px 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    font-family: sans-serif;
+    font-size: 16px;
+
+    /* Animation */
+    opacity: 1;
+    transition: opacity 0.5s ease-out; /* Smooth fade-out animation */
 }

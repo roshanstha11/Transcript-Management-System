@@ -11,9 +11,18 @@
 <body>
     @include('layouts.navbar')
     <main>
+        <!-- DISPLAY ALL FLASH MESSAGES -->
+       @if(session('success'))
+            <!-- The HTML for the toast. Note the new ID and class -->
+            <div id="success-toast" class="toast-notification" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
         <!-- The empty space for page content -->
         @yield('content')
     </main>
+    <!-- JS scripts -->
+     <script src="{{ asset('js/notification.js') }}"></script>
     @include('layouts.footer')
 </body>
 </html>

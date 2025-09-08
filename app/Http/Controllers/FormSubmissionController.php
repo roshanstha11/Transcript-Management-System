@@ -34,7 +34,7 @@ class FormSubmissionController extends Controller
         $formSubmission->remarks = $request->input('remarks');
         $formSubmission->save();
     
-        return redirect('/')->with('success', 'Form submitted successfully!');
+        return redirect('/')->with('success', 'New record created successfully!');
     }
 
     public function create()
@@ -67,7 +67,7 @@ class FormSubmissionController extends Controller
         // Save the changes to the existing model.
         $form->save();
         
-        return redirect('/')->with('success', 'Form submitted successfully!');
+        return redirect('/')->with('success', 'Form updated successfully!');
     }
 
     public function destroy( FormSubmission $form)
@@ -79,7 +79,7 @@ class FormSubmissionController extends Controller
         $form->delete();
 
         // Redirect back with a success message
-        return redirect('/')->with('success', 'Student deleted successfully.');
+        return redirect('/')->with('success', 'Record deleted successfully.');
     }
 
 }
