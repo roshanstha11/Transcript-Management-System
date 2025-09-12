@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class FormSubmissionController extends Controller
 {
-
+    
     // Display all the data from the database
 
     public function index()
@@ -34,7 +34,7 @@ class FormSubmissionController extends Controller
         $formSubmission->remarks = $request->input('remarks');
         $formSubmission->save();
     
-        return redirect('/')->with('success', 'New record created successfully!');
+        return redirect('/')->with('success', 'New record created');
     }
 
     public function create()
@@ -45,7 +45,6 @@ class FormSubmissionController extends Controller
     public function editForm(FormSubmission $form)
     {
         return view('formSubmissions.edit',['form' => $form]);
-
     }
 
     public function updateForm( FormSubmission $form, Request $request) 

@@ -6,7 +6,7 @@
             <div class="col-md-8">
                 <div class="form-container">
                     <h2 class="form-title">Transcript Entry Form</h2>
-                    <form name="index" id = "index" method="POST" action="/edit-form/{{$form->id}}">
+                    <form name="index" id = "index" method="POST" action="{{ route('edit-form', $form->id) }}">
                         @csrf
                         @method('PUT')
                         <div class="row">

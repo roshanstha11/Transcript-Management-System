@@ -6,7 +6,7 @@
             <div class="col-md-8">
                 <div class="form-container">
                     <h2 class="form-title">Transcript Entry Form</h2>
-                    <form name="index" id = "index" method="POST" action="{{ url('submit-form') }}">
+                    <form name="index" id = "index" method="POST" action="{{ route('submit-form') }}">
                         @csrf
                         <div class="row">
                             <!-- Program -->

@@ -18,11 +18,21 @@
                 {{ session('success') }}
             </div>
         @endif
+        @if(session('error'))
+            <div id="success-toast" class="toast-notification" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
+        @error('file')
+            <div class="alert alert-warning">{{ $message }}</div>
+        @enderror
         <!-- The empty space for page content -->
         @yield('content')
     </main>
     <!-- JS scripts -->
-     <script src="{{ asset('js/notification.js') }}"></script>
+    <!-- Bootstrap JS with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('js/notification.js') }}"></script>
     @include('layouts.footer')
 </body>
 </html>

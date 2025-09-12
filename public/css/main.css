@@ -35,12 +35,15 @@ main {
     transition: background 0.2s;
 }
 .table-header-container {
-    width: 60%;
-    margin: 20px auto;
-    padding: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 60%;
+    margin: 20px auto;
+}
+.table-header-buttons {
+    display: flex;
+    gap: 20px;
 }
 .form-container {
     background-color: #ffffff;
