@@ -7,7 +7,4 @@
         </p>
     </div>
 </footer>
-
- 
-    <!-- &copy;          -> This creates the © symbol.
-    {{ date('Y') }} -> This is PHP code that automatically gets the current year.  -->
+   

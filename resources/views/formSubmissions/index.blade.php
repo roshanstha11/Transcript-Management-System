@@ -53,20 +53,20 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($formSubmissions as $data)
+        @foreach($formSubmissions as $form)
         <tr>
             <td>{{ $loop->iteration }}</td>
-            <td>{{ $data->programme_name }}</td>
-            <td>{{ $data->transcript_number }}</td>
-            <td>{{ $data->registration_number }}</td>
-            <td>{{ $data->student_name }}</td>
-            <td>{{ $data->result }}</td>
+            <td>{{ $form->programme_name }}</td>
+            <td>{{ $form->transcript_number }}</td>
+            <td>{{ $form->registration_number }}</td>
+            <td>{{ $form->student_name }}</td>
+            <td>{{ $form->result }}</td>
             <td>
                 <!-- Edit Button -->
-                <a href="/edit-form/{{$data->id}}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="{{ route('edit-form',$form->id) }}" class="btn btn-warning btn-sm">Edit</a>
                 
                 <!-- Delete Button -->
-                <form action="/delete-form/{{$data->id}}" method="POST" style="display:inline;">
+                <form action="{{ route('delete-form',$form->id) }}" method="POST" style="display:inline;">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this student?');">

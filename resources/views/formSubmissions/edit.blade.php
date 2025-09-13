@@ -6,7 +6,7 @@
             <div class="col-md-8">
                 <div class="form-container">
                     <h2 class="form-title">Transcript Entry Form</h2>
-                    <form name="index" id = "index" method="POST" action="{{ route('edit-form', $form->id) }}">
+                    <form name="index" id = "index" method="POST" action="{{ route('update-form', $form->id) }}">
                         @csrf
                         @method('PUT')
                         <div class="row">
@@ -24,14 +24,16 @@
                             <!-- Transcript No -->
                             <div class="col-md-6 mb-3">
                                 <label for="transcript_no" class="form-label">Transcript No</label>
-                                <input type="number" class="form-control" id="transcript_number" name="transcript_number" value="{{$form->transcript_number}}" required>
+                                <input type="number" class="form-control" id="transcript_number" name="transcript_number" value="{{old('transcript_number', $form->transcript_number)}}" data-url="{{ route('check.transcript') }}" data-id="{{ $form->id ?? ''}}" required>
+                                <span id="transcript-error" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="row">
                             <!-- Registration No -->
                             <div class="col-md-6 mb-3">
                                 <label for="registration_no" class="form-label">Registration No</label>
-                                <input type="text" class="form-control" id="registration_number" name="registration_number" value="{{$form->registration_number}}" required>
+                                <input type="text" class="form-control" id="registration_number" name="registration_number" value="{{ old('registration_number', $form->registration_number) }}" data-url="{{ route('check.registration') }}" data-id="{{ $form->id ?? ''}}" required>
+                                <span id="registration-error" class="text-danger"></span>
                             </div>
 
                             <!-- School/College -->
@@ -103,4 +105,185 @@
             </div>
         </div>
     </div>
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Custom JS for validation -->
+    <script>
+        $(document).ready(function () {
+            $.ajaxSetup({
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+            });
+
+            function validateField($input, errorSelector, fieldName) {
+                let value = $input.val().trim();
+                let url   = $input.data('url');
+                let id    = $input.data('id');
+
+                if (!value) {
+                    $(errorSelector).text('');
+                    return;
+                }
+
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: {
+                        [fieldName + '_number']: value,
+                        id: id
+                    },
+                    success: function (response) {
+                        if (response.exists) {
+                            $(errorSelector).text(fieldName + ' number is already taken.');
+                        } else {
+                            $(errorSelector).text('');
+                        }
+                    },
+                    error: function (xhr) {
+                        console.log(xhr.responseText);
+                        $(errorSelector).text('Error checking ' + fieldName + ' number.');
+                    }
+                });
+            }
+
+            $('#transcript_number').on('input', function () {
+                validateField($(this), '#transcript-error', 'transcript');
+            });
+
+            $('#registration_number').on('input', function () {
+                validateField($(this), '#registration-error', 'registration');
+            });
+        });
+
+
+
+        // $(document).ready(function () {
+        //     // Track validity of fields
+        //     let transcriptValid = true;
+        //     let registrationValid = true;
+
+        //     // Reusable AJAX validator
+        //     function validateField($input, errorSelector, fieldName) {
+        //         let value = $input.val().trim();
+        //         let url = $input.data('url');   // URL from Blade
+        //         let id  = $input.data('id');    // Current record ID
+
+        //         if (value === "") {
+        //             $(errorSelector).text('');
+        //             if (fieldName === 'transcript') transcriptValid = true;
+        //             if (fieldName === 'registration') registrationValid = true;
+        //             return;
+        //         }
+
+        //         $.ajax({
+        //             url: url,
+        //             method: 'POST',
+        //             data: {
+        //                 [fieldName + '_number']: value,
+        //                 id: id,   // send current record ID
+        //                 _token: $('meta[name="csrf-token"]').attr('content')
+        //             },
+        //             success: function (response) {
+        //                 if (response.exists) {
+        //                     $(errorSelector).text(
+        //                         fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + ' number is already taken.'
+        //                     );
+        //                     if (fieldName === 'transcript') transcriptValid = false;
+        //                     if (fieldName === 'registration') registrationValid = false;
+        //                 } else {
+        //                     $(errorSelector).text('');
+        //                     if (fieldName === 'transcript') transcriptValid = true;
+        //                     if (fieldName === 'registration') registrationValid = true;
+        //                 }
+        //             },
+        //             error: function () {
+        //                 $(errorSelector).text('Error checking ' + fieldName + ' number.');
+        //                 if (fieldName === 'transcript') transcriptValid = false;
+        //                 if (fieldName === 'registration') registrationValid = false;
+        //             }
+        //         });
+        //     }
+
+        //     // Validate on input
+        //     $('#transcript_number').on('input', function () {
+        //         validateField($(this), '#transcript-error', 'transcript');
+        //     });
+
+        //     $('#registration_number').on('input', function () {
+        //         validateField($(this), '#registration-error', 'registration');
+        //     });
+
+        //     // Prevent submit if invalid
+        //     $('form').on('submit', function (e) {
+        //         if (!transcriptValid || !registrationValid) {
+        //             e.preventDefault();
+        //             alert('Please fix the errors before submitting.');
+        //         }
+        //     });
+        // });
+    </script>
+
+
+
+    {{-- <script>
+        $(document).ready(function() {
+        let transcriptValid = true;
+        let registrationValid = true;
+
+        // Transcript number check
+        $('#transcript_number').on('input', function() {
+            let transcript = $(this).val().trim();
+            let id = $(this).data('id');
+            if(transcript.length > 0){
+                $.post("{{ route('check.transcript') }}", 
+                    { transcript_number: transcript,id: id, _token:'{{ csrf_token() }}' }, 
+                    function(data){
+                        if(data.exists){
+                            $('#transcript-error').text('Transcript number is already taken.');
+                            transcriptValid = false;
+                        } else {
+                            $('#transcript-error').text('');
+                            transcriptValid = true;
+                        }
+                    }
+                );
+            } else {
+                $('#transcript-error').text('');
+                transcriptValid = true;
+            }
+        });
+
+        // Registration number check
+        $('#registration_number').on('input', function() {
+            let regNo = $(this).val().trim();
+            let id = $(this).data('id');
+            if(regNo.length > 0){
+                $.post("{{ route('check.registration') }}", 
+                    { registration_number: regNo,id: id, _token: '{{ csrf_token() }}' }, 
+                    function(data){
+                        if(data.exists){
+                            $('#registration-error').text('Registration number is already taken.');
+                            registrationValid = false;
+                        } else {
+                            $('#registration-error').text('');
+                            registrationValid = true;
+                        }
+                    }
+                );
+            } else {
+                $('#registration-error').text('');
+                registrationValid = true;
+            }
+        });
+        
+        $('form').on('submit', function(e) {
+            if(!transcriptValid || !registrationValid){
+                e.preventDefault(); // stop form submission
+                alert('Please fix the errors before submitting the form.');
+            }
+        });
+
+    });
+
+    </script> --}}
+
 @endsection 

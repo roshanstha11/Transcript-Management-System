@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FormSubmission;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class FormSubmissionController extends Controller
 {
@@ -21,6 +22,22 @@ class FormSubmissionController extends Controller
 
     public function store(Request $request)
     {
+        // Validation
+        $request->validate([
+            'programme_name'      => 'required',
+            'transcript_number'   => 'required|unique:form_submissions,transcript_number',
+            'registration_number' => 'required|unique:form_submissions,registration_number',
+            'school_name'         => 'required',
+            'student_name'        => 'required',
+            'nationality'         => 'required',
+            'gender'              => 'required',
+            'result_type'         => 'required',
+            'result'              => 'required',
+        ], [
+            'transcript_number.unique'   => 'The transcript number is already taken.',
+            'registration_number.unique' => 'The registration number is already taken.',
+        ]);
+
         $formSubmission = new FormSubmission();
         $formSubmission->programme_name = $request->input('programme_name');
         $formSubmission->transcript_number = $request->input('transcript_number');
@@ -34,7 +51,7 @@ class FormSubmissionController extends Controller
         $formSubmission->remarks = $request->input('remarks');
         $formSubmission->save();
     
-        return redirect('/')->with('success', 'New record created');
+        return redirect()->route('index')->with('success', 'New record created');
     }
 
     public function create()
@@ -42,31 +59,39 @@ class FormSubmissionController extends Controller
         return view('formSubmissions.create');
     }
 
-    public function editForm(FormSubmission $form)
+    public function editForm($id)
     {
-        return view('formSubmissions.edit',['form' => $form]);
+        $form = FormSubmission::findOrFail($id);
+        return view('formSubmissions.edit', compact('form'));
     }
 
-    public function updateForm( FormSubmission $form, Request $request) 
+    public function updateForm(Request $request, $id) 
     {
-        // Use the existing model instance '$form' that Laravel provides.
-        // Do NOT create a new one with 'new FormSubmission()'.
 
-        $form->programme_name = $request->input('programme_name');
-        $form->transcript_number = $request->input('transcript_number');
-        $form->registration_number = $request->input('registration_number');
-        $form->school_name = $request->input('school_name');
-        $form->student_name = $request->input('student_name');
-        $form->nationality = $request->input('nationality');
-        $form->gender = $request->input('gender');
-        $form->result_type = $request->input('result_type');
-        $form->result = $request->input('result');
-        $form->remarks = $request->input('remarks');
-        
-        // Save the changes to the existing model.
-        $form->save();
-        
-        return redirect('/')->with('success', 'Form updated successfully!');
+        $form = FormSubmission::findOrFail($id);
+        // Validation
+        $request->validate([
+        'programme_name'      => 'required',
+        'transcript_number'   => [
+            'required',
+            Rule::unique('form_submissions', 'transcript_number')->ignore($form->id)
+        ],
+        'registration_number' => [
+            'required',
+            Rule::unique('form_submissions', 'registration_number')->ignore($form->id)
+        ],
+        'school_name'         => 'required',
+        'student_name'        => 'required',
+        'nationality'         => 'required',
+        'gender'              => 'required',
+        'result_type'         => 'required',
+        'result'              => 'required',
+        ]);
+
+        $form->update($request->all());
+
+        return redirect()->route('index')->with('success', 'Record updated successfully.');
+
     }
 
     public function destroy( FormSubmission $form)
@@ -78,7 +103,26 @@ class FormSubmissionController extends Controller
         $form->delete();
 
         // Redirect back with a success message
-        return redirect('/')->with('success', 'Record deleted successfully.');
+        return redirect()->route('index')->with('success', 'Record deleted successfully.');
     }
+
+    public function checkTranscript(Request $request)
+    {
+        $query = FormSubmission::where('transcript_number', $request->transcript_number);
+        if ($request->id) $query->where('id', '!=', $request->id);
+        $exists = $query->exists();
+        return response()->json(['exists' => $exists]);
+
+    }
+
+    public function checkRegistration(Request $request)
+    {
+        $query = FormSubmission::where('registration_number', $request->registration_number);
+        if ($request->id) $query->where('id', '!=', $request->id);
+        $exists = $query->exists();
+        return response()->json(['exists' => $exists]);
+
+    }
+
 
 }
