@@ -12,7 +12,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link text-warning" href="">Logout</a>
+                    <a type="button" class="btn btn-info" href="{{ route('login-form') }}">Log In</a>
                 </li>
             </ul>
         </div>

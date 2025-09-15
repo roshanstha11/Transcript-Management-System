@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormSubmissionController;
 use App\Http\Controllers\ImportExportController;
+use App\Http\Controllers\AuthController;
 
 
 // // Form Submission Route
@@ -21,3 +22,20 @@ Route::post('/check-registration', [FormSubmissionController::class, 'checkRegis
 // Import Export Routes
 Route::get('/export-record', [ImportExportController::class, 'export'])->name('export-record');
 Route::POST('/import-record', [ImportExportController::class, 'import'])->name('import-record');
+
+
+// Authentication Routes
+Route::get('login', [AuthController::class, 'showLoginForm'])->name('login-form');
+Route::post('login', [AuthController::class, 'login'])->name('login');
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::get('register', [AuthController::class, 'showRegisterForm'])->name('register-form');
+Route::post('register', [AuthController::class, 'register'])->name('register');
+
+// Protected Routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function () {
+        return "Welcome, " . auth()->user()->name;
+    });
+});
+

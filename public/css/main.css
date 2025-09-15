@@ -3,6 +3,7 @@ body {
     display: flex;
     flex-direction: column;
     background-color: #f0f8ff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 main {
     min-width: 100%;
