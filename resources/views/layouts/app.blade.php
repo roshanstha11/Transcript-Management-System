@@ -30,6 +30,15 @@
                 {{ session('error') }}
             </div>
         @endif
+        
+        {{-- Login and Register form error check --}}
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+            <div id="success-toast" class="toast-notification" role="alert">
+                {{ $error }}
+            </div>    
+            @endforeach  
+        @endif
         @error('file')
             <div class="alert alert-warning">{{ $message }}</div>
         @enderror

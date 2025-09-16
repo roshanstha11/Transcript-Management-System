@@ -24,18 +24,24 @@ Route::get('/export-record', [ImportExportController::class, 'export'])->name('e
 Route::POST('/import-record', [ImportExportController::class, 'import'])->name('import-record');
 
 
-// Authentication Routes
-Route::get('login', [AuthController::class, 'showLoginForm'])->name('login-form');
-Route::post('login', [AuthController::class, 'login'])->name('login');
-Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+// GUEST ROUTES
+// Accessible only by users who are NOT logged in.
+// We can optionally group them in a 'guest' middleware.
 
-Route::get('register', [AuthController::class, 'showRegisterForm'])->name('register-form');
-Route::post('register', [AuthController::class, 'register'])->name('register');
+Route::middleware(['guest'])->group(function () {
+    Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('login', [AuthController::class, 'login']);
 
-// Protected Routes
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return "Welcome, " . auth()->user()->name;
-    });
+    Route::get('register', [AuthController::class, 'showRegisterForm'])->name('register');
+    Route::post('register', [AuthController::class, 'register']);
 });
+
+// PROTECTED ROUTES (AUTHENTICATED USERS)
+// Accessible only by users who ARE logged in.
+Route::middleware(['auth'])->group(function () {
+    
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+    
+});
+
 

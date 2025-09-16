@@ -12,7 +12,27 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a type="button" class="btn btn-info" href="{{ route('login-form') }}">Log In</a>
+                    {{-- If the user is not logged in --}}
+                    @guest
+                    <a type="button" class="btn btn-info" href="{{ route('login') }}">Log In</a>
+                    <a type="button" class="btn btn-info" href="{{ route('register') }}">Register</a>
+                    @endguest
+                    {{-- If the user is logged in --}}
+                    @auth
+                    <div class="dropdown">
+                        <button class="btn btn-info dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ Auth::user()->name }}
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                    @endauth
                 </li>
             </ul>
         </div>

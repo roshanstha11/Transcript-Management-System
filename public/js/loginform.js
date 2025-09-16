@@ -1,10 +1,5 @@
 // JS scripts
 // Bootstrap JS with Popper
-    
-document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    showMessage('This is a demo login page - no actual authentication occurs');
-});
 
 function showMessage(message) {
     // Create and show a Bootstrap toast
