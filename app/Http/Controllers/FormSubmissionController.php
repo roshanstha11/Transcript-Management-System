@@ -14,7 +14,7 @@ class FormSubmissionController extends Controller
     public function index()
     {
         $formSubmissions = FormSubmission::all();
-        return view('formSubmissions.index', compact('formSubmissions'));
+        return view('formSubmissions.show', compact('formSubmissions'));
     }
 
 
@@ -90,7 +90,7 @@ class FormSubmissionController extends Controller
 
         $form->update($request->all());
 
-        return redirect()->route('index')->with('success', 'Record updated successfully.');
+        return redirect()->route('show-form')->with('success', 'Record updated successfully.');
 
     }
 
@@ -103,7 +103,7 @@ class FormSubmissionController extends Controller
         $form->delete();
 
         // Redirect back with a success message
-        return redirect()->route('index')->with('success', 'Record deleted successfully.');
+        return redirect()->route('show-form')->with('success', 'Record deleted successfully.');
     }
 
     public function checkTranscript(Request $request)

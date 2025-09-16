@@ -8,7 +8,7 @@
             <h2 class="text-dark mb-0">Welcome Back</h2>
             <p class="text-muted">Sign in to your account</p>
         </div>
-        <form id="loginForm" method="POST" action="{{ route('login') }}">
+        <form id="loginForm" method="POST" action="{{ route('login.post') }}">
             @csrf
             <div class="form-floating">
                 <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>

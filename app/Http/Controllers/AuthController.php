@@ -23,21 +23,7 @@ class AuthController extends Controller
         
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('index')->with('success', 'Login successful');
-            // return redirect()->intended('/dashboard'); // or home route
-
-            // Redirect based on role
-            if (Auth::user()->role === 'superadmin') {
-                echo "superadmin";
-                // return redirect()->route('superadmin.dashboard');
-            } elseif (Auth::user()->role === 'admin') {
-                echo "admin";
-                // return redirect()->route('admin.dashboard');
-            } else {
-                echo "user";
-                // return redirect()->route('user.dashboard');
-            }
-
+            return redirect()->route('show-form')->with('success', 'Login successful');
         }
         
         return back()->withErrors([
@@ -50,7 +36,7 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/login');
+        return redirect('/')->with('success', 'Logged out successfully.');
     }
     
     public function showRegisterForm()
@@ -75,7 +61,6 @@ class AuthController extends Controller
             'role' => $request->role, // role from form
         ]);
         
-        // Auth::login($user);
         return redirect()->route('login')->with('success', 'Registration successful! Please login.'); // or home route
     }
 
