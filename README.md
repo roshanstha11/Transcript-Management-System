@@ -58,6 +58,11 @@ A Laravel-based web application for managing academic transcript submissions wit
     ```bash
     - php artisan migrate
 
+8. **Run Database Seeder**
+    ```bash
+    - php artisan db:seed
+    This will create a new superadmin user in the database for login.
+
 8. **Serve the application**
     ```bash
     - php artisan serve
