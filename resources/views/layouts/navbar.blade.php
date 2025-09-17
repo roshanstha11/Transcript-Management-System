@@ -13,10 +13,10 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
                     {{-- If the user is not logged in --}}
-                    @guest
+                    {{-- @guest
                     <a type="button" class="btn btn-info" href="{{ route('login') }}">Log In</a>
                     <a type="button" class="btn btn-info" href="{{ route('register') }}">Register</a>
-                    @endguest
+                    @endguest --}}
                     {{-- If the user is logged in --}}
                     @auth
                     <div class="btn-group">
