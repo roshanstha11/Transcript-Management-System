@@ -38,7 +38,7 @@ A Laravel-based web application for managing academic transcript submissions wit
 
 3. **Create environment file**
     ```bash
-    - Download .env file from the link  https://drive.google.com/drive/folders/1TJQH9cw3uXvHwZX3VCIxPMJhi578MURr?usp=sharing
+    - Download .env file from the link: https://shorturl.at/jXwBg
     - And copy to the root location of the project.
 
 4. **Configure .env fiile**
@@ -61,7 +61,5 @@ A Laravel-based web application for managing academic transcript submissions wit
 8. **Serve the application**
     ```bash
     - php artisan serve
-
-
 
 
