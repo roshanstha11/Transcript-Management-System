@@ -6,35 +6,39 @@
     <h2 style="color: #0d6efd">Transcript Records</h2>
     {{-- Left Side Buttons --}}
     <!-- Button to trigger the modal -->
+    @auth
+    @if(Auth::user()->role === 'super_admin' || Auth::user()->role === 'admin')
     <div class="table-header-buttons">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#importModal">
             Import Records
         </button>
         <!-- Modal -->
-        <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="importModalLabel">Import Records</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <form action="{{ route('import-record') }}" method="POST" enctype="multipart/form-data">
-                        <div class="modal-body">
-                            @csrf
-                            <div class="mb-3">
-                                <label for="file" class="form-label">Choose CSV or XLSX file</label>
-                                <input class="form-control" type="file" id="file" name="file" required>
+            <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="importModalLabel">Import Records</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="{{ route('import-record') }}" method="POST" enctype="multipart/form-data">
+                            <div class="modal-body">
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="file" class="form-label">Choose CSV or XLSX file</label>
+                                    <input class="form-control" type="file" id="file" name="file" required>
+                                </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Import</button>
-                        </div>
-                    </form>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Import</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-        <a href="{{ route('export-record') }}" class="btn btn-primary">Export Records</a>
+            <a href="{{ route('export-record') }}" class="btn btn-primary">Export Records</a>
+        @endif
+        @endauth
         <!-- Add New Data Button -->
         <a href="/create-form" class="btn btn-primary">+ Add New</a>
     </div>
@@ -62,6 +66,8 @@
             <td>{{ $form->student_name }}</td>
             <td>{{ $form->result }}</td>
             <td>
+                @auth
+                @if(Auth::user()->role === 'super_admin' || Auth::user()->role === 'admin')
                 <!-- Edit Button -->
                 <a href="{{ route('edit-form',$form->id) }}" class="btn btn-warning btn-sm">Edit</a>
                 
@@ -73,6 +79,8 @@
                         Delete
                     </button>
                 </form>
+                @endif
+                @endauth
             </td>
         </tr>
         @endforeach
