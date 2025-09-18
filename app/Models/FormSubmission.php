@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class FormSubmission extends Model
 {
+    
+    public function transcript()
+    {
+        return $this->hasOne(Transcript::class, 'form_submission_id');
+    }
+
+
     protected $fillable = [
         'programme_name',
         'transcript_number',
@@ -18,5 +25,7 @@ class FormSubmission extends Model
         'result',
         'remarks',
     ];
+
+
 }
 

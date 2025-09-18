@@ -53,6 +53,7 @@
     
     <script src="{{ asset('js/notification.js') }}"></script>
     <script src="{{ asset('js/loginform.js') }}"></script>
+    @yield('scripts')
 
     @include('layouts.footer')
 </body>

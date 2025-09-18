@@ -94,10 +94,10 @@ class FormSubmissionController extends Controller
 
     }
 
-    public function destroy( FormSubmission $form)
+    public function destroy( $id )
     {
         // Find the student by ID
-        // $formSubmissions = FormSubmission::findOrFail($id);
+        $form = FormSubmission::findOrFail($id);
 
         // Delete it
         $form->delete();
@@ -123,6 +123,21 @@ class FormSubmissionController extends Controller
         return response()->json(['exists' => $exists]);
 
     }
+
+    // Generate Transcript Number and save to transcripts table
+    public function generateTranscript(FormSubmission $form)
+    {
+        
+        $transcriptNumber = str_pad($form->id, 6, '1000', STR_PAD_LEFT);
+        
+        $form->transcript()->create([
+            'transcript_number' => $transcriptNumber,
+            'issued_date' => now(),
+        ]);
+
+        return redirect()->back()->with('success', 'Transcript number generated: ' . $transcriptNumber);
+    }
+
 
 
 }

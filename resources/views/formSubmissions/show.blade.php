@@ -6,13 +6,13 @@
     <h2 style="color: #0d6efd">Transcript Records</h2>
     {{-- Left Side Buttons --}}
     <!-- Button to trigger the modal -->
-    @auth
-    @if(Auth::user()->role === 'super_admin' || Auth::user()->role === 'admin')
     <div class="table-header-buttons">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#importModal">
-            Import Records
-        </button>
-        <!-- Modal -->
+        @auth
+        @if(Auth::user()->role === 'super_admin' || Auth::user()->role === 'admin')
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#importModal">
+                Import Records
+            </button>
+            <!-- Modal -->
             <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -43,8 +43,12 @@
         <a href="/create-form" class="btn btn-primary">+ Add New</a>
     </div>
 </div>
+<div class="container" style="max-width: 60%;">
+    <input type="text" class="form-control" id="searchInput" placeholder="Type to search...">
+</div>
 
-<table class="transcript-table">
+
+<table class="transcript-table" id="transcriptTable" style="margin-top: 0%">
     <thead>
         <tr>
             <th>S No</th>
@@ -53,7 +57,13 @@
             <th>Regd. No</th>
             <th>Student Name</th>
             <th>CGPA</th>
-            <th></th>
+            <th>Issued Date</th>
+            @auth
+            @if(Auth::user()->role === 'super_admin' || Auth::user()->role === 'admin')
+            <th>Actions</th>
+            @endif
+            @endauth
+        
         </tr>
     </thead>
     <tbody>
@@ -61,10 +71,28 @@
         <tr>
             <td>{{ $loop->iteration }}</td>
             <td>{{ $form->programme_name }}</td>
-            <td>{{ $form->transcript_number }}</td>
+            <td>
+                @if (!$form->transcript)
+                    @if (Auth::user()->role === 'super_admin' || Auth::user()->role === 'admin')
+                        <form method="POST" action="{{ route('generate.transcript', $form->id) }}">
+                            @csrf
+                            <button type="submit" class="btn btn-danger btn-sm">Generate Transcript</button>
+                        </form>
+                    @else
+                    <span>Transcript number not generated</span>
+                    @endif
+                @else
+                <span>{{ $form->transcript->transcript_number }}</span>
+                @endif
+            </td>
             <td>{{ $form->registration_number }}</td>
             <td>{{ $form->student_name }}</td>
             <td>{{ $form->result }}</td>
+            @if ($form->transcript)
+            <td>{{ \Carbon\Carbon::parse($form->transcript->updated_date)->format('Y-M-d') }}</td>
+            @else
+            <td>Transcript number not generated</td>
+            @endif
             <td>
                 @auth
                 @if(Auth::user()->role === 'super_admin' || Auth::user()->role === 'admin')
@@ -87,4 +115,25 @@
     </tbody>
 </table>
 
+@endsection
+@section('scripts')
+<script>
+document.getElementById('searchInput').addEventListener('keyup', function () {
+    const searchValue = this.value.toLowerCase();
+    const rows = document.querySelectorAll('#transcriptTable tbody tr');
+
+    rows.forEach(row => {
+
+        const programme = row.cells[1].textContent.toLowerCase();
+        const transcript = row.cells[2].textContent.toLowerCase();
+        const regNo = row.cells[3].textContent.toLowerCase();
+        const name = row.cells[4].textContent.toLowerCase();
+
+        const match = name.includes(searchValue) || regNo.includes(searchValue) || transcript.includes(searchValue) || programme.includes(searchValue);
+
+        row.style.display = match ? '' : 'none';
+
+    });
+});
+</script>
 @endsection

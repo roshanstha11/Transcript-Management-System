@@ -24,7 +24,7 @@
                             <!-- Transcript No -->
                             <div class="col-md-6 mb-3">
                                 <label for="transcript_no" class="form-label">Transcript No</label>
-                                <input type="number" class="form-control" id="transcript_number" name="transcript_number" value="{{old('transcript_number', $form->transcript_number)}}" data-url="{{ route('check.transcript') }}" data-id="{{ $form->id ?? ''}}" required>
+                                <input type="number" class="form-control" id="transcript_number" name="transcript_number" value="{{old('transcript_number', $form->transcript->transcript_number)}}" data-url="{{ route('check.transcript') }}" data-id="{{ $form->id ?? ''}}" required>
                                 <span id="transcript-error" class="text-danger"></span>
                             </div>
                         </div>

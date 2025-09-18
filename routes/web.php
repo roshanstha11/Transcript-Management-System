@@ -45,11 +45,11 @@ Route::middleware(['role:user,admin,super_admin'])->group(function () {
     Route::get('/show-form', [FormSubmissionController::class, 'index'])->name('show-form');
     Route::post('submit-form', [FormSubmissionController::class, 'store'])->name('submit-form');
     Route::get('/create-form', [FormSubmissionController::class, 'create'])->name('create-form');
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     
 });
 Route::middleware(['role:admin,super_admin'])->group(function () {
     
-    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     
     // // Form Submission Route
     Route::get('/edit-form/{id}', [FormSubmissionController::class, 'editForm'])->name('edit-form');
@@ -58,6 +58,7 @@ Route::middleware(['role:admin,super_admin'])->group(function () {
     
     Route::post('/check-transcript', [FormSubmissionController::class, 'checkTranscript'])->name('check.transcript');
     Route::post('/check-registration', [FormSubmissionController::class, 'checkRegistration'])->name('check.registration');
+    Route::post('/generate-transcript/{form}', [FormSubmissionController::class, 'generateTranscript'])->name('generate.transcript');
     
     // Import Export Routes
     Route::get('/export-record', [ImportExportController::class, 'export'])->name('export-record');

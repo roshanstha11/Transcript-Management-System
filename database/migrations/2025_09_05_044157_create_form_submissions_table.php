@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('form_submissions', function (Blueprint $table) {
             $table->id();
             $table->string('programme_name');
-            $table->unsignedBigInteger('transcript_number');
+            // $table->unsignedBigInteger('transcript_number');
             $table->string('registration_number');
             $table->string('school_name');
             $table->string('student_name');

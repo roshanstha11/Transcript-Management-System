@@ -26,7 +26,7 @@
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             {{-- <button type="submit" class="dropdown-item">Logout</button> --}}
-                            <button type="submit" class="dropdown-item d-flex align-items-center gap-3 py-2 px-3 rounded-2 text-danger" onclick="return confirm('Are you sure you want Logout?');">
+                            <button type="submit" class="dropdown-item d-flex align-items-center gap-3 py-2 px-3 rounded-2 text-danger" onmouseover="this.style.backgroundColor='#0d6efd';" onmouseout="this.style.backgroundColor='';">
                                 <i class="bi bi-box-arrow-right"></i>
                                 Logout
                             </button>
