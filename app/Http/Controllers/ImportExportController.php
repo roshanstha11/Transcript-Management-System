@@ -21,18 +21,22 @@ class ImportExportController extends Controller
                 
                 Excel::import(new TranscriptRecordImport, $file);
                 
-                return redirect('/')->with('success', 'Records imported successfully.');
+                return redirect(route('show-form'))->with('success', 'Records imported successfully.');
             // } 
             // catch (\Illuminate\Validation\ValidationException $e) {
                 // return redirect('/')->with('error', 'Invalid file type. Please upload a CSV or Excel file.'); 
             } catch (\Exception $e) {
-                return redirect('/')->with('error', 'Failed to import records. Please ensure the feild format is correct.');
+                return redirect(route('show-form'))->with('error', 'Failed to import records. Please ensure the feild format is correct.');
         }
     }
 
     public function export() 
     {
-        return Excel::download(new TranscriptRecordExport, 'transcript_records.xlsx');
-        return redirect('/')->with('success', 'Records exported successfully.');
+        try{
+            return Excel::download(new TranscriptRecordExport, 'transcript_records.xlsx');
+            return redirect(route('show-form'))->with('success', 'Records exported successfully.');
+        } catch (\Exception $e) {
+            return redirect(route('show-form'))->with('error', 'Failed to export records.');
+        }   
     }
 }

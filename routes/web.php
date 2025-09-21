@@ -28,12 +28,7 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])
 
 Route::middleware(['guest'])->group(function () {
 
-    // Redirect "/" to "/login"
-    // Route::get('/', function () {
-    //     return redirect()->route('login');
-    // });
-
-    // Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    
     Route::post('login', [AuthController::class, 'login'])->name('login.post');
 
 });
@@ -43,6 +38,7 @@ Route::middleware(['guest'])->group(function () {
 Route::middleware(['role:user,admin,super_admin'])->group(function () {
     
     Route::get('/show-form', [FormSubmissionController::class, 'index'])->name('show-form');
+    Route::get('/view', [FormSubmissionController::class, 'view'])->name('view');
     Route::post('submit-form', [FormSubmissionController::class, 'store'])->name('submit-form');
     Route::get('/create-form', [FormSubmissionController::class, 'create'])->name('create-form');
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');

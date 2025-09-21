@@ -36,30 +36,6 @@
             </div>
         </div>
         @endauth
-        {{-- <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    @auth
-                    <div class="btn-group">
-                        <button class="btn btn-info dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ Auth::user()->email }}
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item">Name: {{ Auth::user()->name }}</a></li>
-                            <li><a class="dropdown-item">Role: {{ Auth::user()->role }}</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>                                
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item">Logout</button>
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
-                    @endauth
-                </li>
-            </ul>
-        </div> --}}
     </div>
 </nav>
 

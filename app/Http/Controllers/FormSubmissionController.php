@@ -17,6 +17,12 @@ class FormSubmissionController extends Controller
         return view('formSubmissions.show', compact('formSubmissions'));
     }
 
+    public function view()
+    {
+        $formSubmissions = FormSubmission::all();
+        return view('formSubmissions.view', compact('formSubmissions'));
+    }
+
 
     // Creates the data entered in the form to the database
 

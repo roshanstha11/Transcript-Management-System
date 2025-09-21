@@ -15,7 +15,7 @@ class TranscriptRecordExport implements FromCollection, WithHeadings
     {
         return TranscriptRecord::select(
             'programme_name',
-            'transcript_number',
+            // 'transcript_number',
             'registration_number',
             'school_name',
             'student_name',
@@ -26,7 +26,7 @@ class TranscriptRecordExport implements FromCollection, WithHeadings
             'remarks')->get()->map(function ($record) {
                 return [
                     'programme_name' => $record->programme_name,
-                    'transcript_number' => $record->transcript_number,
+                    // 'transcript_number' => $record->transcript_number,
                     'registration_number' => $record->registration_number,
                     'school_name' => $record->school_name,
                     'student_name' => $record->student_name,
@@ -43,7 +43,7 @@ class TranscriptRecordExport implements FromCollection, WithHeadings
     {
         return [
             'Programme Name',
-            'Transcript Number',
+            // 'Transcript Number',
             'Registration Number',
             'School Name',
             'Student Name',

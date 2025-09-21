@@ -16,15 +16,15 @@ class TranscriptRecordImport implements ToModel
     {
         return new TranscriptRecord([
             'programme_name' => $row['0'],
-            'transcript_number' => $row['1'],
-            'registration_number' => $row['2'],
-            'school_name' => $row['3'],
-            'student_name' => $row['4'],
-            'nationality' => $row['5'],
-            'gender' => $row['6'],
-            'result_type' => $row['7'],
-            'result' => $row['8'],
-            'remarks' => $row['9'],
+            // 'transcript_number' => $row['1'],
+            'registration_number' => $row['1'],
+            'school_name' => $row['2'],
+            'student_name' => $row['3'],
+            'nationality' => $row['4'],
+            'gender' => $row['5'],
+            'result_type' => $row['6'],
+            'result' => $row['7'],
+            'remarks' => $row['8'],
         ]);
     }
 }

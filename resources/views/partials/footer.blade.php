@@ -1,6 +1,6 @@
 <!-- File: resources/views/layouts/partials/footer.blade.php -->
 
-<footer class="text-center mt-4 py-3 bg-light">
+<footer class="text-center py-3 bg-primary">
     <div class="container">
         <p class="text-muted">
             &copy; {{ date('Y') }} Transcript Management System. All Rights Reserved.

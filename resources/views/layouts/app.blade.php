@@ -8,18 +8,19 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="{{ asset('images/kulogo.png') }}">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('css/loginform.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
+    @yield('styles')
 
 </head>
 <body>
-    @include('layouts.navbar')
+    @include('partials.navbar')
 
-    <main>
-        <!-- DISPLAY ALL FLASH MESSAGES -->
+    <!-- DISPLAY ALL FLASH MESSAGES -->
        @if(session('success'))
             <!-- The HTML for the toast. Note the new ID and class -->
             <div id="success-toast" class="toast-notification" role="alert">
@@ -43,18 +44,28 @@
         @error('file')
             <div class="alert alert-warning">{{ $message }}</div>
         @enderror
-        <!-- The empty space for page content -->
+    <!-- END OF FLASH MESSAGES -->
+    <div class="d-flex">
+        @auth
+            @include('partials.sidebar')
+        <!-- Sidebar -->
+        {{-- @include('partials.sidebar') --}}
+        @endauth
         @yield('content')
-    </main>
+    </div>
+    <!-- The empty space for page content -->
+    
     
     <!-- JS scripts -->
     <!-- Bootstrap JS with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
     <script src="{{ asset('js/notification.js') }}"></script>
     <script src="{{ asset('js/loginform.js') }}"></script>
+    <script src="{{ asset('js/sidebar.js') }}"></script>
     @yield('scripts')
 
-    @include('layouts.footer')
+    @include('partials.footer')
 </body>
 </html>
