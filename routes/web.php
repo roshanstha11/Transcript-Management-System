@@ -5,6 +5,7 @@ use App\Http\Controllers\FormSubmissionController;
 use App\Http\Controllers\ImportExportController;
 use App\Http\Controllers\AuthController;
 use App\Http\Middleware\RoleMiddleware;
+use App\Http\Controllers\DashboardController;
 
 // GUEST ROUTES
 // Accessible only by users who are NOT logged in.
@@ -37,10 +38,10 @@ Route::middleware(['guest'])->group(function () {
 // Accessible only by users who ARE logged in.
 Route::middleware(['role:user,admin,super_admin'])->group(function () {
     
-    Route::get('/show-form', [FormSubmissionController::class, 'index'])->name('show-form');
-    Route::get('/view', [FormSubmissionController::class, 'view'])->name('view');
+    // Route::get('/show-form', [FormSubmissionController::class, 'index'])->name('show-form');
+    Route::get('/view-all-record', [FormSubmissionController::class, 'viewAllRecord'])->name('view-all-record');
     Route::post('submit-form', [FormSubmissionController::class, 'store'])->name('submit-form');
-    Route::get('/create-form', [FormSubmissionController::class, 'create'])->name('create-form');
+    Route::get('/create-form', [FormSubmissionController::class, 'createForm'])->name('create-form');
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     
 });
@@ -62,6 +63,12 @@ Route::middleware(['role:admin,super_admin'])->group(function () {
     
     Route::get('register', [AuthController::class, 'showRegisterForm'])->name('register');
     Route::post('register', [AuthController::class, 'register']);
+});
+
+Route::middleware(['role:super_admin'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('superadmin.dashboard');
+    Route::patch('/users/{id}/update-role', [DashboardController::class, 'updateRole'])->name('users.updateRole');
+
 });
 
 

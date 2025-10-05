@@ -7,8 +7,8 @@ sidebar.classList.toggle('collapsed');
 
     // Change icon depending on state
     if (sidebar.classList.contains('collapsed')) {
-        toggleIcon.classList.replace("bi-list", "bi-chevron-right"); // arrow when collapsed
+        toggleIcon.classList.replace("bi-list", "bi-chevron-right"); // bars when collapsed
     } else {
-        toggleIcon.classList.replace("bi-chevron-right", "bi-list"); // bars when expanded
+        toggleIcon.classList.replace("bi-chevron-right", "bi-list"); // arrow when expanded
     }
 });

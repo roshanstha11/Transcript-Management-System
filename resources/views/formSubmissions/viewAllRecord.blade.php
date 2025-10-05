@@ -142,15 +142,14 @@
                             <td>Transcript number not generated</td>
                             @endif
                             <td>@auth
-                                @if(Auth::user()->role === 'super_admin' || Auth::user()->role === 'admin')
+                                @if((Auth::user()->role === 'super_admin' || Auth::user()->role === 'admin') && !empty($form->transcript->transcript_number))
                                 <!-- Edit Button -->
-                                {{-- <button class="btn btn-sm btn-outline-info"><i class="bi bi-pencil"></i></button> --}}
-                                <a href="{{ route('edit-form',$form->id) }}" class="btn btn-sm btn-outline-info"><i class="bi bi-pencil"></i></a>
+                                <a href="{{ route('edit-form',$form->id) }}" class="btn btn-sm btn-outline-info" title="Edit Record"><i class="bi bi-pencil"></i></a>
                                 <!-- Delete Button -->
                                 <form action="{{ route('delete-form',$form->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this student?');">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete Record" onclick="return confirm('Are you sure you want to delete this student?');">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </form>

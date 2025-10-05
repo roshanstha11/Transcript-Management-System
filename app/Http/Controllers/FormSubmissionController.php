@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FormSubmission;
+use App\Models\ActivityLog;
 use Illuminate\Http\Request;
+use App\Models\FormSubmission;
 use Illuminate\Validation\Rule;
 
 class FormSubmissionController extends Controller
@@ -17,10 +18,10 @@ class FormSubmissionController extends Controller
         return view('formSubmissions.show', compact('formSubmissions'));
     }
 
-    public function view()
+    public function viewAllRecord()
     {
         $formSubmissions = FormSubmission::all();
-        return view('formSubmissions.view', compact('formSubmissions'));
+        return view('formSubmissions.viewAllRecord', compact('formSubmissions'));
     }
 
 
@@ -56,13 +57,19 @@ class FormSubmissionController extends Controller
         $formSubmission->result = $request->input('result');
         $formSubmission->remarks = $request->input('remarks');
         $formSubmission->save();
+
+        // ✅ Log activity here
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'action' => 'Created new record with ID ' . $formSubmission->id,
+        ]);
     
         return redirect()->route('index')->with('success', 'New record created');
     }
 
-    public function create()
+    public function createForm()
     {
-        return view('formSubmissions.create');
+        return view('formSubmissions.createForm');
     }
 
     public function editForm($id)
@@ -96,6 +103,12 @@ class FormSubmissionController extends Controller
 
         $form->update($request->all());
 
+        // ✅ Log activity here
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'action' => 'Updated record with ID ' . $form->id,
+        ]);
+
         return redirect()->route('show-form')->with('success', 'Record updated successfully.');
 
     }
@@ -107,6 +120,12 @@ class FormSubmissionController extends Controller
 
         // Delete it
         $form->delete();
+
+        // ✅ Log activity here
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'action' => 'Deleted record with ID ' . $form->id,
+        ]);
 
         // Redirect back with a success message
         return redirect()->route('show-form')->with('success', 'Record deleted successfully.');
@@ -139,6 +158,12 @@ class FormSubmissionController extends Controller
         $form->transcript()->create([
             'transcript_number' => $transcriptNumber,
             'issued_date' => now(),
+        ]);
+
+        // ✅ Log activity here
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'action' => 'Generated transcript for record ID ' . $form->trancript->id,
         ]);
 
         return redirect()->back()->with('success', 'Transcript number generated: ' . $transcriptNumber);

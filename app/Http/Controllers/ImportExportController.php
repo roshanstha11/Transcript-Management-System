@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\TranscriptRecordImport;
 use App\Exports\TranscriptRecordExport;
+use App\Imports\TranscriptRecordImport;
 
 class ImportExportController extends Controller
 {
@@ -20,6 +21,12 @@ class ImportExportController extends Controller
             $file = $request->file('file');
                 
                 Excel::import(new TranscriptRecordImport, $file);
+
+                // ✅ Log activity here
+                ActivityLog::create([
+                    'user_id' => Auth::id(),
+                    'action' => 'Imported transcript records from file ' . $file->getClientOriginalName(),
+                ]);
                 
                 return redirect(route('show-form'))->with('success', 'Records imported successfully.');
             // } 
@@ -34,6 +41,12 @@ class ImportExportController extends Controller
     {
         try{
             return Excel::download(new TranscriptRecordExport, 'transcript_records.xlsx');
+            // ✅ Log activity here
+            ActivityLog::create([
+                'user_id' => Auth::id(),
+                'action' => 'Exported transcript records to Excel file',
+            ]);
+            
             return redirect(route('show-form'))->with('success', 'Records exported successfully.');
         } catch (\Exception $e) {
             return redirect(route('show-form'))->with('error', 'Failed to export records.');
