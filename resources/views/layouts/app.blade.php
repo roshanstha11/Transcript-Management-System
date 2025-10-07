@@ -48,11 +48,10 @@
     <div class="d-flex">
         @auth
             @include('partials.sidebar')
-        <!-- Sidebar -->
-        {{-- @include('partials.sidebar') --}}
         @endauth
         @yield('content')
     </div>
+    @include('partials.footer')
     <!-- The empty space for page content -->
     
     
@@ -66,6 +65,5 @@
     <script src="{{ asset('js/sidebar.js') }}"></script>
     @yield('scripts')
     
-    @include('partials.footer')
 </body>
 </html>

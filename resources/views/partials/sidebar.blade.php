@@ -13,20 +13,20 @@
                 <a class="nav-link" href="{{ route('view-all-record')}}"><i class="bi bi-view-list"></i> <span>View Records</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="bi bi-person-fill-gear"></i> <span>User Management</span></a>
+                <a class="nav-link" href="{{ route('users.index')}}"><i class="bi bi-person-fill-gear"></i> <span>User Management</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#"><i class="bi bi-info-circle"></i> <span>About</span></a>
             </li>
         @elseif(Auth::user()->role === 'admin')
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('view-all-record') }}"><i class="bi bi-speedometer2"></i> <span>Dashboard</span></a>
+                <a class="nav-link" href="{{ route('superadmin.dashboard') }}"><i class="bi bi-speedometer2"></i> <span>Dashboard</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('view-all-record')}}"><i class="bi bi-view-list"></i> <span>Home</span></a>
+                <a class="nav-link" href="{{ route('view-all-record')}}"><i class="bi bi-view-list"></i> <span>View Records</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="bi bi-person-fill-gear"></i> <span>User Management</span></a>
+                <a class="nav-link" href="{{ route('users.index')}}"><i class="bi bi-person-fill-gear"></i> <span>User Management</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#"><i class="bi bi-info-circle"></i> <span>About</span></a>

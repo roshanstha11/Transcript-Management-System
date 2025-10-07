@@ -2,10 +2,11 @@
 
 @section('content')
 <div class="container">
-    <h2 class="mb-4 mt-4">Super Admin Dashboard</h2>
+    <!-- <h2 class="text-center mb-4 mt-4">Super Admin Dashboard</h2> -->
+    <h2 class="text-center mb-4 mt-4">Welcome To</br> Kathmandu University School of Medical Sciences</h2>
 
     {{-- Stats Section --}}
-    <div class="row mb-4">
+    <div class="row m-5">
         <div class="col-md-3">
             <div class="card text-center shadow-sm">
                 <div class="card-body">

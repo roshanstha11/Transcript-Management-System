@@ -141,7 +141,8 @@
                             @else
                             <td>Transcript number not generated</td>
                             @endif
-                            <td>@auth
+                            <td>
+                                @auth
                                 @if((Auth::user()->role === 'super_admin' || Auth::user()->role === 'admin') && !empty($form->transcript->transcript_number))
                                 <!-- Edit Button -->
                                 <a href="{{ route('edit-form',$form->id) }}" class="btn btn-sm btn-outline-info" title="Edit Record"><i class="bi bi-pencil"></i></a>

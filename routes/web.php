@@ -6,6 +6,8 @@ use App\Http\Controllers\ImportExportController;
 use App\Http\Controllers\AuthController;
 use App\Http\Middleware\RoleMiddleware;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 
 // GUEST ROUTES
 // Accessible only by users who are NOT logged in.
@@ -28,8 +30,6 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])
     ->name('login');
 
 Route::middleware(['guest'])->group(function () {
-
-    
     Route::post('login', [AuthController::class, 'login'])->name('login.post');
 
 });
@@ -63,12 +63,24 @@ Route::middleware(['role:admin,super_admin'])->group(function () {
     
     Route::get('register', [AuthController::class, 'showRegisterForm'])->name('register');
     Route::post('register', [AuthController::class, 'register']);
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('superadmin.dashboard');
 });
 
 Route::middleware(['role:super_admin'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('superadmin.dashboard');
+    
     Route::patch('/users/{id}/update-role', [DashboardController::class, 'updateRole'])->name('users.updateRole');
 
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+    Route::post('/users', [UserController::class, 'store'])->name('users.store');
+    Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+
 });
+
+
 
 
