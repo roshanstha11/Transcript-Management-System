@@ -15,7 +15,6 @@ class FormSubmission extends Model
 
     protected $fillable = [
         'programme_name',
-        'transcript_number',
         'registration_number',
         'school_name',
         'student_name',

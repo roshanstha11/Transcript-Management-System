@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use App\Models\FormSubmission;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Transcript;
 
 class FormSubmissionController extends Controller
 {
@@ -33,7 +35,7 @@ class FormSubmissionController extends Controller
         // Validation
         $request->validate([
             'programme_name'      => 'required',
-            'transcript_number'   => 'required|unique:form_submissions,transcript_number',
+            'transcript_number'   => 'required|unique:transcript,transcript_number',
             'registration_number' => 'required|unique:form_submissions,registration_number',
             'school_name'         => 'required',
             'student_name'        => 'required',
@@ -88,7 +90,7 @@ class FormSubmissionController extends Controller
         'programme_name'      => 'required',
         'transcript_number'   => [
             'required',
-            Rule::unique('form_submissions', 'transcript_number')->ignore($form->id)
+            Rule::unique('transcript', 'transcript_number')->ignore($form->transcript->id)
         ],
         'registration_number' => [
             'required',
@@ -110,7 +112,7 @@ class FormSubmissionController extends Controller
             'action' => 'Updated record with ID ' . $form->id,
         ]);
 
-        return redirect()->route('show-form')->with('success', 'Record updated successfully.');
+        return redirect()->route('view-all-record')->with('success', 'Record updated successfully.');
 
     }
 
@@ -129,12 +131,12 @@ class FormSubmissionController extends Controller
         ]);
 
         // Redirect back with a success message
-        return redirect()->route('show-form')->with('success', 'Record deleted successfully.');
+        return redirect()->route('view-all-record')->with('success', 'Record deleted successfully.');
     }
 
     public function checkTranscript(Request $request)
     {
-        $query = FormSubmission::where('transcript_number', $request->transcript_number);
+        $query = Transcript::where('transcript_number', $request->transcript_number);
         if ($request->id) $query->where('id', '!=', $request->id);
         $exists = $query->exists();
         return response()->json(['exists' => $exists]);

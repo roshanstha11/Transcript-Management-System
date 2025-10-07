@@ -17,7 +17,7 @@
     @yield('styles')
 
 </head>
-<body>
+<body style="height:100%; margin:0;">
     @include('partials.navbar')
 
     <!-- DISPLAY ALL FLASH MESSAGES -->
@@ -45,13 +45,14 @@
             <div class="alert alert-warning">{{ $message }}</div>
         @enderror
     <!-- END OF FLASH MESSAGES -->
-    <div class="d-flex">
+    <div class="d-flex" style="min-height: 100%; flex-direction: column;">
         @auth
             @include('partials.sidebar')
         <!-- Sidebar -->
         {{-- @include('partials.sidebar') --}}
         @endauth
         @yield('content')
+        @include('partials.footer')
     </div>
     <!-- The empty space for page content -->
     
@@ -66,6 +67,5 @@
     <script src="{{ asset('js/sidebar.js') }}"></script>
     @yield('scripts')
 
-    @include('partials.footer')
 </body>
 </html>

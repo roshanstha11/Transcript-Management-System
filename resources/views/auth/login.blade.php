@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Login')
 @section('content')
-<div class="content">
+<div class="content" style="flex: 1;">
     <div class="p-4">
         <div class="login-container">
             <div class="login-card position-relative">
