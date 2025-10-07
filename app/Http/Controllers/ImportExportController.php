@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\TranscriptRecordExport;
 use App\Imports\TranscriptRecordImport;
+use Illuminate\Support\Facades\Auth;
 
 class ImportExportController extends Controller
 {
@@ -28,12 +29,12 @@ class ImportExportController extends Controller
                     'action' => 'Imported transcript records from file ' . $file->getClientOriginalName(),
                 ]);
                 
-                return redirect(route('show-form'))->with('success', 'Records imported successfully.');
+                return redirect(route('view-all-record'))->with('success', 'Records imported successfully.');
             // } 
             // catch (\Illuminate\Validation\ValidationException $e) {
                 // return redirect('/')->with('error', 'Invalid file type. Please upload a CSV or Excel file.'); 
             } catch (\Exception $e) {
-                return redirect(route('show-form'))->with('error', 'Failed to import records. Please ensure the feild format is correct.');
+                return redirect(route('view-all-record'))->with('error', 'Failed to import records. Please ensure the feild format is correct.');
         }
     }
 
@@ -47,9 +48,9 @@ class ImportExportController extends Controller
                 'action' => 'Exported transcript records to Excel file',
             ]);
             
-            return redirect(route('show-form'))->with('success', 'Records exported successfully.');
+            return redirect(route('view-all-record'))->with('success', 'Records exported successfully.');
         } catch (\Exception $e) {
-            return redirect(route('show-form'))->with('error', 'Failed to export records.');
+            return redirect(route('view-all-record'))->with('error', 'Failed to export records.');
         }   
     }
 }

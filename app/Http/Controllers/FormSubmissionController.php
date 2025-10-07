@@ -6,6 +6,7 @@ use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use App\Models\FormSubmission;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class FormSubmissionController extends Controller
 {
@@ -163,7 +164,7 @@ class FormSubmissionController extends Controller
         // ✅ Log activity here
         ActivityLog::create([
             'user_id' => Auth::id(),
-            'action' => 'Generated transcript for record ID ' . $form->trancript->id,
+            'action' => 'Generated transcript for record ID ' . $form->transcript->id,
         ]);
 
         return redirect()->back()->with('success', 'Transcript number generated: ' . $transcriptNumber);

@@ -16,7 +16,7 @@ Route::get('/', function () {
             case 'admin':
             case 'user':
             case 'super_admin':
-                return redirect()->route('show-form')->with('error', 'You are already logged in.');
+                return redirect()->route('view-all-record')->with('error', 'You are already logged in.');
         }
     }
 
