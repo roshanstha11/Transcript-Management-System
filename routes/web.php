@@ -43,6 +43,9 @@ Route::middleware(['role:user,admin,super_admin'])->group(function () {
     Route::post('submit-form', [FormSubmissionController::class, 'store'])->name('submit-form');
     Route::get('/create-form', [FormSubmissionController::class, 'createForm'])->name('create-form');
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::get('/transcript/filter', [TranscriptController::class, 'filter'])->name('transcript.filter');
+
     
 });
 Route::middleware(['role:admin,super_admin'])->group(function () {

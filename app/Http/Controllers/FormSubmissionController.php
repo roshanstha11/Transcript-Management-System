@@ -172,6 +172,20 @@ class FormSubmissionController extends Controller
         return redirect()->back()->with('success', 'Transcript number generated: ' . $transcriptNumber);
     }
 
+    public function filter(Request $request)
+    {
+        $date = $request->date;
+
+        $query = Transcript::query();
+
+        if ($date) {
+            $query->whereDate('updated_date', $date);
+        }
+
+        return response()->json($query->orderBy('id', 'desc')->get());
+    }
+
+
 
 
 }

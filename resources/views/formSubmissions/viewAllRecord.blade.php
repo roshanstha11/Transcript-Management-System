@@ -29,7 +29,7 @@
       margin-bottom: 15px;
     }
     .search-box {
-        width: 500px;
+        width: 300px;
     }
     </style>
 @endsection
@@ -46,13 +46,27 @@
                 </div>
                 <!-- Top Actions -->
                 <div class="table-actions">
-                    {{-- Search Box --}}
-                    <div class="col-12 col-md">
-                        <div class="input-group search-box">
-                        <span class="input-group-text bg-white border-end-0">
-                            <i class="bi bi-search text-secondary"></i>
-                        </span>
-                        <input id="searchInput" type="text" class="form-control border-start-0" placeholder="Search...">
+                    <div class="row mb-3 align-items-center">
+                        {{-- Search Box --}}
+                        <div class="col-12 col-md-6 mb-2 mb-md-0">
+                            <div class="input-group search-box">
+                                <span class="input-group-text bg-white border-end-0">
+                                    <i class="bi bi-search text-secondary"></i>
+                                </span>
+                                <input id="searchInput" type="text" class="form-control border-start-0" placeholder="Search...">
+                            </div>
+                        </div>
+
+                        {{-- Date Filter --}}
+                        <div class="col-6 col-md-4 mb-2 mb-md-0">
+                            <input type="date" id="filter_date" class="form-control">
+                        </div>
+
+                        {{-- Filter Button --}}
+                        <div class="col-6 col-md-2 text-md-start">
+                            <button id="filterBtn" class="btn btn-primary w-100">
+                                <i class="bi bi-funnel"></i> Filter
+                            </button>
                         </div>
                     </div>
                     {{-- Import Export Button --}}
@@ -168,15 +182,52 @@
 @endsection
 @section('scripts')
 <script>
-  // Simple search filter
-  document.getElementById("searchInput").addEventListener("keyup", function () {
+// Simple search filter
+document.getElementById("searchInput").addEventListener("keyup", function () {
     let filter = this.value.toLowerCase();
     let rows = document.querySelectorAll("#tableBody tr");
-    rows.forEach(row => {
-      let text = row.innerText.toLowerCase();
-      row.style.display = text.includes(filter) ? "" : "none";
+        rows.forEach(row => {
+            let text = row.innerText.toLowerCase();
+            row.style.display = text.includes(filter) ? "" : "none";
+        });
+});
+
+    $(document).ready(function() {
+    // Load all records on page load
+    fetchTranscripts();
+
+    // Filter by date when button clicked
+    $('#filterBtn').click(function() {
+        let date = $('#filter_date').val();
+        fetchTranscripts(date);
     });
-  });
+
+    // AJAX function
+    function fetchTranscripts(date = '') {
+        $.ajax({
+            url: "{{ route('transcript.filter') }}",
+            type: "GET",
+            data: { date: date },
+            success: function(response) {
+                $('#transcriptData').html('');
+                if (response.length > 0) {
+                    $.each(response, function(index, item) {
+                        $('#transcriptData').append(`
+                            <tr>
+                                <td>${item.id}</td>
+                                <td>${item.transcript_number}</td>
+                                <td>${item.student_name}</td>
+                                <td>${item.updated_date}</td>
+                            </tr>
+                        `);
+                    });
+                } else {
+                    $('#transcriptData').html('<tr><td colspan="4" class="text-center">No records found</td></tr>');
+                }
+            }
+        });
+    }
+});
 </script>
 @endsection
 
