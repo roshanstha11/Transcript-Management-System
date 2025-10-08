@@ -185,7 +185,4 @@ class FormSubmissionController extends Controller
         return response()->json($query->orderBy('id', 'desc')->get());
     }
 
-
-
-
 }
