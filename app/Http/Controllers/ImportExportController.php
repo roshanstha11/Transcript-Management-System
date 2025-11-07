@@ -29,7 +29,7 @@ class ImportExportController extends Controller
                     'action' => 'Imported transcript records from file ' . $file->getClientOriginalName(),
                 ]);
                 
-                return redirect(route('view-all-record'))->with('success', 'Records imported successfully.');
+                return redirect(route('view-all-record'))->with('success', 'Records imported successfully. Duplicate registration numbers were automatically skipped.');
             // } 
             // catch (\Illuminate\Validation\ValidationException $e) {
                 // return redirect('/')->with('error', 'Invalid file type. Please upload a CSV or Excel file.'); 
@@ -54,3 +54,4 @@ class ImportExportController extends Controller
         }   
     }
 }
+

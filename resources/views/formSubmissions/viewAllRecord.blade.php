@@ -94,6 +94,9 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
+                                            <a href="{{ asset('documents/import-sample.xlsx') }}" class="btn btn-secondary" download>
+                                                Download File Directly
+                                            </a>
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                             <button type="submit" class="btn btn-primary">Import</button>
                                         </div>
@@ -182,15 +185,15 @@
 @endsection
 @section('scripts')
 <script>
-// Simple search filter
-document.getElementById("searchInput").addEventListener("keyup", function () {
-    let filter = this.value.toLowerCase();
-    let rows = document.querySelectorAll("#tableBody tr");
-        rows.forEach(row => {
-            let text = row.innerText.toLowerCase();
-            row.style.display = text.includes(filter) ? "" : "none";
-        });
-});
+    // Simple search filter
+    document.getElementById("searchInput").addEventListener("keyup", function () {
+        let filter = this.value.toLowerCase();
+        let rows = document.querySelectorAll("#tableBody tr");
+            rows.forEach(row => {
+                let text = row.innerText.toLowerCase();
+                row.style.display = text.includes(filter) ? "" : "none";
+            });
+    });
 
     $(document).ready(function() {
     // Load all records on page load
@@ -227,7 +230,7 @@ document.getElementById("searchInput").addEventListener("keyup", function () {
             }
         });
     }
-});
+    });
 </script>
 @endsection
 

@@ -35,7 +35,7 @@ class FormSubmissionController extends Controller
         // Validation
         $request->validate([
             'programme_name'      => 'required',
-            'transcript_number'   => 'required|unique:transcript,transcript_number',
+            // 'transcript_number'   => 'required|unique:transcript,transcript_number',
             'registration_number' => 'required|unique:form_submissions,registration_number',
             'school_name'         => 'required',
             'student_name'        => 'required',
@@ -44,13 +44,13 @@ class FormSubmissionController extends Controller
             'result_type'         => 'required',
             'result'              => 'required',
         ], [
-            'transcript_number.unique'   => 'The transcript number is already taken.',
+            // 'transcript_number.unique'   => 'The transcript number is already taken.',
             'registration_number.unique' => 'The registration number is already taken.',
         ]);
 
         $formSubmission = new FormSubmission();
         $formSubmission->programme_name = $request->input('programme_name');
-        $formSubmission->transcript_number = $request->input('transcript_number');
+        // $formSubmission->transcript_number = $request->input('transcript_number');
         $formSubmission->registration_number = $request->input('registration_number');
         $formSubmission->school_name = $request->input('school_name');
         $formSubmission->student_name = $request->input('student_name');
@@ -67,7 +67,7 @@ class FormSubmissionController extends Controller
             'action' => 'Created new record with ID ' . $formSubmission->id,
         ]);
     
-        return redirect()->route('index')->with('success', 'New record created');
+        return redirect()->route('view-all-record')->with('success', 'New record created');
     }
 
     public function createForm()

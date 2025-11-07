@@ -14,6 +14,13 @@ class TranscriptRecordImport implements ToModel
     */
     public function model(array $row)
     {
+        // 1. Get the Registration Number using the header row
+        $registrationNumber = $row[1];
+        
+        // 2. Check the database for an existing record with this number Skip the row if the record already exists
+        if (TranscriptRecord::where('registration_number', $registrationNumber)->exists()) {
+            return null;
+        }
         return new TranscriptRecord([
             'programme_name' => $row['0'],
             // 'transcript_number' => $row['1'],

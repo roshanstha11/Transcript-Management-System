@@ -42,16 +42,16 @@ class TranscriptRecordExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         return [
-            'Programme Name',
-            // 'Transcript Number',
-            'Registration Number',
-            'School Name',
-            'Student Name',
-            'Nationality',
-            'Gender',
-            'Result Type',
-            'Result',
-            'Remarks',
+            'programme_name',
+            // 'transcript_number',
+            'registration_number',
+            'school_name',
+            'student_name',
+            'nationality',
+            'gender',
+            'result_type',
+            'result',
+            'remarks',
         ];
     }
 }
