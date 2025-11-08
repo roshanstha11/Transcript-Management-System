@@ -154,7 +154,7 @@
                             <td>{{ $form->student_name }}</td>
                             <td>{{ $form->result }}</td>
                             @if ($form->transcript)
-                            <td>{{ \Carbon\Carbon::parse($form->transcript->updated_date)->format('Y-M-d') }}</td>
+                            <td>{{$form->transcript->updated_at->format('Y-M-d') }}</td>
                             @else
                             <td>Transcript number not generated</td>
                             @endif

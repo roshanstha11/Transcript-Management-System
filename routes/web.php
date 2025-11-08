@@ -58,7 +58,7 @@ Route::middleware(['role:admin,super_admin'])->group(function () {
     
     Route::post('/check-transcript', [FormSubmissionController::class, 'checkTranscript'])->name('check.transcript');
     Route::post('/check-registration', [FormSubmissionController::class, 'checkRegistration'])->name('check.registration');
-    Route::post('/generate-transcript/{form}', [FormSubmissionController::class, 'generateTranscript'])->name('generate.transcript');
+    Route::post('/generate-transcript/{id}', [FormSubmissionController::class, 'generateTranscript'])->name('generate.transcript');
     
     // Import Export Routes
     Route::get('/export-record', [ImportExportController::class, 'export'])->name('export-record');

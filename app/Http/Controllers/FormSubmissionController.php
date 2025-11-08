@@ -84,17 +84,17 @@ class FormSubmissionController extends Controller
     public function updateForm(Request $request, $id) 
     {
 
-        $form = FormSubmission::findOrFail($id);
+        $form = Transcript::findOrFail($id);
         // Validation
         $request->validate([
         'programme_name'      => 'required',
         'transcript_number'   => [
             'required',
-            Rule::unique('transcript', 'transcript_number')->ignore($form->transcript->id)
+            Rule::unique('transcript', 'transcript_number')->ignore($form->id)
         ],
         'registration_number' => [
             'required',
-            Rule::unique('form_submissions', 'registration_number')->ignore($form->id)
+            Rule::unique('transcript', 'registration_number')->ignore($form->id)
         ],
         'school_name'         => 'required',
         'student_name'        => 'required',
@@ -152,15 +152,28 @@ class FormSubmissionController extends Controller
 
     }
 
+    
+    
     // Generate Transcript Number and save to transcripts table
-    public function generateTranscript(FormSubmission $form)
+    public function generateTranscript($id)
     {
-        
-        $transcriptNumber = str_pad($form->id, 6, '1000', STR_PAD_LEFT);
-        
-        $form->transcript()->create([
-            'transcript_number' => $transcriptNumber,
-            'issued_date' => now(),
+        // Find the form submission
+        $form = FormSubmission::findOrFail($id);
+
+        // Create a transcript entry with copied data
+        $transcript = Transcript::create([
+            'form_submission_id' => $form->id,
+            'transcript_number' => $this->generateTranscriptNumber(),
+            'issued_date'        => now(),
+            'programme_name'     => $form->programme_name,
+            'registration_number'=> $form->registration_number,
+            'school_name'        => $form->school_name,
+            'student_name'       => $form->student_name,
+            'nationality'        => $form->nationality,
+            'gender'             => $form->gender,
+            'result_type'        => $form->result_type,
+            'result'             => $form->result,
+            'remarks'            => $form->remarks,
         ]);
 
         // ✅ Log activity here
@@ -169,7 +182,23 @@ class FormSubmissionController extends Controller
             'action' => 'Generated transcript for record ID ' . $form->transcript->id,
         ]);
 
-        return redirect()->back()->with('success', 'Transcript number generated: ' . $transcriptNumber);
+        return redirect()->back()->with('success', 'Transcript number generated: ' . $transcript->transcript_number);
+    }
+
+
+    private function generateTranscriptNumber()
+    {
+        // Fetch the last transcript record
+        $last = Transcript::orderBy('id', 'desc')->first();
+
+        if (!$last) {
+            // Start from 2025 if no transcript exists
+            return '1023122';
+        }
+
+        // Increment the last transcript number by 1
+        $lastNumber = intval($last->transcript_number);
+        return strval($lastNumber + 1);
     }
 
     public function filter(Request $request)

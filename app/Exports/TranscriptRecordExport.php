@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\FormSubmission as TranscriptRecord;
+use App\Models\Transcript;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
@@ -13,9 +13,9 @@ class TranscriptRecordExport implements FromCollection, WithHeadings
     */
     public function collection()
     {
-        return TranscriptRecord::select(
+        return Transcript::select(
             'programme_name',
-            // 'transcript_number',
+            'transcript_number',
             'registration_number',
             'school_name',
             'student_name',
@@ -26,7 +26,7 @@ class TranscriptRecordExport implements FromCollection, WithHeadings
             'remarks')->get()->map(function ($record) {
                 return [
                     'programme_name' => $record->programme_name,
-                    // 'transcript_number' => $record->transcript_number,
+                    'transcript_number' => $record->transcript_number,
                     'registration_number' => $record->registration_number,
                     'school_name' => $record->school_name,
                     'student_name' => $record->student_name,
@@ -43,7 +43,7 @@ class TranscriptRecordExport implements FromCollection, WithHeadings
     {
         return [
             'programme_name',
-            // 'transcript_number',
+            'transcript_number',
             'registration_number',
             'school_name',
             'student_name',

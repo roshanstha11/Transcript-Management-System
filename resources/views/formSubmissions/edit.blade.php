@@ -8,7 +8,7 @@
                 <div class="col-md-8">
                     <div class="form-container">
                         <h2 class="form-title">Transcript Edit Record</h2>
-                        <form name="index" id = "index" method="POST" action="{{ route('update-form', $form->id) }}">
+                        <form name="index" id = "index" method="POST" action="{{ route('update-form', $form->transcript->id) }}">
                             @csrf
                             @method('PUT')
                             <div class="row">
