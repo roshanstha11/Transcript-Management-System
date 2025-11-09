@@ -10,6 +10,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Transcript;
 
+
 class FormSubmissionController extends Controller
 {
     
@@ -23,7 +24,8 @@ class FormSubmissionController extends Controller
 
     public function viewAllRecord()
     {
-        $formSubmissions = FormSubmission::all();
+        // $formSubmissions = FormSubmission::all();
+        $formSubmissions = FormSubmission::paginate(10);
         return view('formSubmissions.viewAllRecord', compact('formSubmissions'));
     }
 

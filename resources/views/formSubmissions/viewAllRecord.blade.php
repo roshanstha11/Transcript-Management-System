@@ -178,6 +178,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-start">
+                    {{ $formSubmissions->links() }}
+                </div>
             </div>
         </div>
     </div>
