@@ -94,8 +94,8 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <a href="{{ asset('documents/import-sample.xlsx') }}" class="btn btn-secondary" download>
-                                                Download File Directly
+                                            <a href="{{ asset('documents/import_sample.xlsx') }}" class="btn btn-info" download>
+                                                <i class="bi bi-download"></i> Import Sample
                                             </a>
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                             <button type="submit" class="btn btn-primary">Import</button>

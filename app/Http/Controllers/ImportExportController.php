@@ -21,15 +21,15 @@ class ImportExportController extends Controller
             
             $file = $request->file('file');
                 
-                Excel::import(new TranscriptRecordImport, $file);
+            Excel::import(new TranscriptRecordImport, $file);
 
-                // ✅ Log activity here
-                ActivityLog::create([
-                    'user_id' => Auth::id(),
-                    'action' => 'Imported transcript records from file ' . $file->getClientOriginalName(),
-                ]);
-                
-                return redirect(route('view-all-record'))->with('success', 'Records imported successfully. Duplicate registration numbers were automatically skipped.');
+            // ✅ Log activity here
+            ActivityLog::create([
+                'user_id' => Auth::id(),
+                'action' => 'Imported transcript records from file ' . $file->getClientOriginalName(),
+            ]);
+            
+            return redirect(route('view-all-record'))->with('success', 'Records imported successfully. Duplicate registration numbers were automatically skipped.');
             // } 
             // catch (\Illuminate\Validation\ValidationException $e) {
                 // return redirect('/')->with('error', 'Invalid file type. Please upload a CSV or Excel file.'); 

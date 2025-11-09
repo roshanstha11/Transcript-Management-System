@@ -21,9 +21,9 @@ class TranscriptRecordImport implements ToModel
         if (TranscriptRecord::where('registration_number', $registrationNumber)->exists()) {
             return null;
         }
+        
         return new TranscriptRecord([
             'programme_name' => $row['0'],
-            // 'transcript_number' => $row['1'],
             'registration_number' => $row['1'],
             'school_name' => $row['2'],
             'student_name' => $row['3'],
